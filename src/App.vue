@@ -70,6 +70,7 @@ const resizeCorner = ref('')
 const dragStart = ref({ x: 0, y: 0, boxX: 0, boxY: 0, initialX: 0, initialY: 0 })
 const positionCode = ref('')
 const showPositionMenu = ref(false)
+const showUrlMenu = ref(false)
 const isMenuVisible = ref(true) // 控制菜单显示/隐藏
 const isMobileMenuOpen = ref(false) // 移动端菜单开关
 
@@ -287,21 +288,27 @@ const importPositionCode = () => {
             </div>
             <transition name="fade">
               <div class="custom" v-if="customURL">
-                <div class="laptop">
-                  <span><i class="iconfont icon-wangye"></i> 笔记本</span><span>{{ protocol }}://</span><input type="text"
-                    placeholder="请输入网址" v-model.trim="laptop" class="url">
-                </div>
-                <div class="phone">
-                  <span><i class="iconfont icon-shumashouji"></i> 手机</span><span>{{ protocol }}://</span><input type="text"
-                    placeholder="请输入网址" v-model.trim="phone" class="url">
-                </div>
-                <div class="pad">
-                  <span><i class="iconfont icon-pingban"></i> 平板</span><span>{{ protocol }}://</span><input type="text"
-                    placeholder="请输入网址" v-model.trim="pad" class="url">
-                </div>
-                <div class="computer">
-                  <span><i class="iconfont icon-diannao"></i> 电脑</span><span>{{ protocol }}://</span><input type="text"
-                    placeholder="请输入网址" v-model.trim="computer" class="url">
+                <div class="custom-inner">
+                  <div class="custom-row">
+                    <span class="row-label"><i class="iconfont icon-wangye"></i> 笔记本</span>
+                    <span class="row-protocol">{{ protocol }}://</span>
+                    <input type="text" placeholder="请输入网址" v-model.trim="laptop">
+                  </div>
+                  <div class="custom-row">
+                    <span class="row-label"><i class="iconfont icon-shumashouji"></i> 手机</span>
+                    <span class="row-protocol">{{ protocol }}://</span>
+                    <input type="text" placeholder="请输入网址" v-model.trim="phone">
+                  </div>
+                  <div class="custom-row">
+                    <span class="row-label"><i class="iconfont icon-pingban"></i> 平板</span>
+                    <span class="row-protocol">{{ protocol }}://</span>
+                    <input type="text" placeholder="请输入网址" v-model.trim="pad">
+                  </div>
+                  <div class="custom-row">
+                    <span class="row-label"><i class="iconfont icon-diannao"></i> 电脑</span>
+                    <span class="row-protocol">{{ protocol }}://</span>
+                    <input type="text" placeholder="请输入网址" v-model.trim="computer">
+                  </div>
                 </div>
                 <div class="close" @click="customURL = false"><i class="iconfont icon-cancel-1-copy"></i></div>
               </div>
@@ -355,36 +362,41 @@ const importPositionCode = () => {
     <transition name="fade">
       <div class="controls" v-if="!activeDevice">
         <!-- 网址 -->
-        <div class="url">
+        <div class="url url-menu-wrapper" @mouseenter="showUrlMenu = true" @mouseleave="showUrlMenu = false">
           <div class="default">
-            <span @click.stop="customURL = !customURL" class="website" :class="{ active: customURL }">
+            <span class="website" :class="{ active: showUrlMenu }">
               <i class="iconfont icon-icon_wangye"></i> 网址</span>
             <transition name="fade">
-              <div style="display: inline-block; margin-left: 8px;">
-                <span style="font-size: 15px; opacity: 0.7;">{{protocol}}://</span>
-                <input type="text" placeholder="请输入网址" v-model.trim="url" class="url">
+              <div class="url-input-wrap">
+                <span class="url-protocol">{{protocol}}://</span>
+                <input type="text" placeholder="请输入网址" v-model.trim="url" class="url-main-input">
               </div>
             </transition>
           </div>
-          <transition name="fade">
-            <div class="custom" v-if="customURL">
-              <div class="laptop">
-                <span><i class="iconfont icon-wangye"></i> 笔记本</span><span>{{ protocol }}://</span><input type="text"
-                  placeholder="请输入网址" v-model.trim="laptop" class="url">
+          <transition name="slide-fade">
+            <div class="custom" v-if="showUrlMenu" @click.stop>
+              <div class="custom-inner">
+                <div class="custom-row">
+                  <span class="row-label"><i class="iconfont icon-wangye"></i> 笔记本</span>
+                  <span class="row-protocol">{{ protocol }}://</span>
+                  <input type="text" placeholder="请输入网址" v-model.trim="laptop" class="url">
+                </div>
+                <div class="custom-row">
+                  <span class="row-label"><i class="iconfont icon-shumashouji"></i> 手机</span>
+                  <span class="row-protocol">{{ protocol }}://</span>
+                  <input type="text" placeholder="请输入网址" v-model.trim="phone" class="url">
+                </div>
+                <div class="custom-row">
+                  <span class="row-label"><i class="iconfont icon-pingban"></i> 平板</span>
+                  <span class="row-protocol">{{ protocol }}://</span>
+                  <input type="text" placeholder="请输入网址" v-model.trim="pad" class="url">
+                </div>
+                <div class="custom-row">
+                  <span class="row-label"><i class="iconfont icon-diannao"></i> 电脑</span>
+                  <span class="row-protocol">{{ protocol }}://</span>
+                  <input type="text" placeholder="请输入网址" v-model.trim="computer" class="url">
+                </div>
               </div>
-              <div class="phone">
-                <span><i class="iconfont icon-shumashouji"></i> 手机</span><span>{{ protocol }}://</span><input type="text"
-                  placeholder="请输入网址" v-model.trim="phone" class="url">
-              </div>
-              <div class="pad">
-                <span><i class="iconfont icon-pingban"></i> 平板</span><span>{{ protocol }}://</span><input type="text"
-                  placeholder="请输入网址" v-model.trim="pad" class="url">
-              </div>
-              <div class="computer">
-                <span><i class="iconfont icon-diannao"></i> 电脑</span><span>{{ protocol }}://</span><input type="text"
-                  placeholder="请输入网址" v-model.trim="computer" class="url">
-              </div>
-              <div class="close" @click="customURL = false"><i class="iconfont icon-cancel-1-copy"></i></div>
             </div>
           </transition>
         </div>
@@ -413,17 +425,19 @@ const importPositionCode = () => {
           </div>
           <transition name="slide-fade">
             <div v-if="showPositionMenu" class="menu-dropdown">
-              <div class="menu-item" @click="togglePositionBox">
-                <i class="iconfont icon-icon_wangye"></i>
-                <span>{{ positionBoxVisible ? '隐藏' : '显示' }}</span>
-              </div>
-              <div class="menu-item" @click="exportPositionCode">
-                <i class="iconfont icon-icon_wangye"></i>
-                <span>导出</span>
-              </div>
-              <div class="menu-item" @click="importPositionCode">
-                <i class="iconfont icon-icon_wangye"></i>
-                <span>导入</span>
+              <div class="menu-dropdown-inner">
+                <div class="menu-item" @click="togglePositionBox">
+                  <i class="iconfont icon-icon_wangye"></i>
+                  <span>{{ positionBoxVisible ? '隐藏' : '显示' }}</span>
+                </div>
+                <div class="menu-item" @click="exportPositionCode">
+                  <i class="iconfont icon-icon_wangye"></i>
+                  <span>导出</span>
+                </div>
+                <div class="menu-item" @click="importPositionCode">
+                  <i class="iconfont icon-icon_wangye"></i>
+                  <span>导入</span>
+                </div>
               </div>
             </div>
           </transition>
@@ -693,171 +707,258 @@ body {
     align-items: center;
     justify-content: center;
     flex-wrap: nowrap;
-    gap: 12px;
-    padding: 12px 24px;
+    gap: 8px;
+    padding: 10px 16px;
     height: auto;
-    width: 680px;
-    color: rgba(255, 255, 255, 0.95);
-    background: rgba(30, 30, 35, 0.85);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
+    width: 653px;
+    max-width: calc(100vw - 40px);
+    color: #1a1a1a;
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(40px) saturate(180%) brightness(1.05);
+    -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.05);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 20px;
     user-select: none;
     z-index: 10010;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 
-                0 1px 0 rgba(255, 255, 255, 0.1) inset;
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.02),
+      0 4px 12px rgba(0, 0, 0, 0.03),
+      0 12px 32px rgba(0, 0, 0, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    
+
     .menu-indicator {
       display: none;
     }
-    
+
     .iconfont {
       font-size: 14px;
+      color: #666;
     }
 
     .control-item {
       display: flex;
       align-items: center;
-      padding: 8px 16px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 8px 14px;
+      background: rgba(0, 0, 0, 0.03);
+      border: 1px solid rgba(0, 0, 0, 0.06);
       border-radius: 12px;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      
+
       &:hover {
-        background: rgba(255, 255, 255, 0.2);
-        border-color: rgba(255, 255, 255, 0.3);
+        background: rgba(0, 0, 0, 0.06);
+        border-color: rgba(0, 0, 0, 0.1);
         transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
       }
-      
+
       &:active {
         transform: translateY(0);
+        box-shadow: none;
       }
     }
 
     .url {
       display: flex;
       flex-direction: column;
+      position: relative;
 
       .website,
       .custom span:first-child {
         margin-right: 10px;
-
       }
 
       .website {
-        cursor: pointer;
-        padding: 8px 16px;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.15);
+        cursor: default;
+        padding: 8px 14px;
+        background: rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(0, 0, 0, 0.06);
         border-radius: 12px;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-        &:hover {
-          background: rgba(255, 255, 255, 0.2);
-          border-color: rgba(255, 255, 255, 0.3);
-          transform: translateY(-1px);
-        }
+        color: #1a1a1a;
+        font-size: 14px;
+        font-weight: 500;
 
         &.active {
-          font-weight: 400;
+          font-weight: 500;
+          background: rgba(0, 0, 0, 0.08);
+          border-color: rgba(0, 0, 0, 0.12);
+        }
+      }
 
-          input {
-            opacity: 0.4;
+      .url-input-wrap {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        margin-left: 8px;
+
+        .url-protocol {
+          font-size: 14px;
+          color: #999;
+          white-space: nowrap;
+        }
+
+        .url-main-input {
+          width: auto;
+          min-width: 80px;
+          height: 28px;
+          padding: 4px 10px;
+          font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+          font-size: 14px;
+          color: #1a1a1a;
+          background: rgba(0, 0, 0, 0.03);
+          border: 1px solid rgba(0, 0, 0, 0.06);
+          border-radius: 12px;
+          transition: all 0.3s ease;
+
+          &::placeholder {
+            color: #999;
+          }
+
+          &:focus {
+            outline: none;
+            background: rgba(0, 0, 0, 0.05);
+            border-color: rgba(0, 0, 0, 0.15);
           }
         }
       }
 
       .custom {
         position: absolute;
-        top: 90px;
-        background: rgba(30, 30, 35, 0.9);
-        backdrop-filter: blur(20px) saturate(180%);
-        -webkit-backdrop-filter: blur(20px) saturate(180%);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        margin-left: -20px;
-        padding: 16px 20px 12px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        border-radius: 16px;
-        font-size: 14px;
+        top: calc(100% - 4px);
+        left: 0;
+        padding-top: 12px;
+        z-index: 10020;
+
+        .custom-inner {
+          background: rgba(255, 255, 255, 0.85);
+          backdrop-filter: blur(40px) saturate(180%) brightness(1.05);
+          -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.05);
+          border: 1px solid rgba(0, 0, 0, 0.06);
+          padding: 16px 20px;
+          box-shadow:
+            0 4px 12px rgba(0, 0, 0, 0.03),
+            0 16px 48px rgba(0, 0, 0, 0.05),
+            inset 0 1px 0 rgba(255, 255, 255, 0.8);
+          border-radius: 20px;
+          font-size: 14px;
+          color: #1a1a1a;
+          box-sizing: border-box;
+          width: 420px;
+          max-width: calc(100vw - 40px);
+        }
+
+        .custom-row {
+          display: grid;
+          grid-template-columns: 80px auto 1fr;
+          align-items: center;
+          gap: 8px;
+          padding: 5px 0;
+          min-width: 0;
+
+          .row-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #666;
+            white-space: nowrap;
+          }
+
+          .row-protocol {
+            font-size: 13px;
+            color: #999;
+            white-space: nowrap;
+          }
+
+          input {
+            width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+          }
+        }
 
         .close {
-          margin-top: 8px;
-          text-align: center;
-          cursor: pointer;
-          padding: 4px;
-          border-radius: 8px;
-          transition: all 0.2s ease;
-          
-          &:hover {
-            background: rgba(255, 255, 255, 0.15);
-          }
+          display: none;
         }
       }
 
       input {
         display: inline-block;
         width: 120px;
-        height: 30px;
-        padding: 4px 10px 4px 0;
+        height: 32px;
+        padding: 4px 10px;
         margin-left: 2px;
-        font-family: Avenir, Helvetica, Arial, sans-serif;
-        font-size: 16px;
-        color: rgba(255, 255, 255, 0.9);
-        background: none;
-        border: none;
-        border-radius: 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        transition: border-color 0.3s ease;
+        font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        font-size: 14px;
+        color: #1a1a1a;
+        background: rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        border-radius: 8px;
+        transition: all 0.3s ease;
 
         &::placeholder {
-          color: rgba(255, 255, 255, 0.5);
+          color: #999;
         }
 
         &:focus {
           outline: none;
-          border-bottom-color: rgba(255, 255, 255, 0.5);
+          background: rgba(0, 0, 0, 0.05);
+          border-color: rgba(0, 0, 0, 0.15);
         }
       }
-
     }
 
     .protocol-toggle {
       position: relative;
       min-width: 90px;
       justify-content: center;
-      
+
       .protocol-switch {
         position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
-        
+        gap: 10px;
+
         .protocol-indicator {
-          position: absolute;
-          left: 0;
-          width: 8px;
-          height: 8px;
-          background: #4ade80;
-          border-radius: 50%;
-          box-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          
+          position: relative;
+          width: 36px;
+          height: 20px;
+          background: #1a1a1a;
+          border-radius: 10px;
+          transition: all 0.3s ease;
+          box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+          flex-shrink: 0;
+
+          &::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          }
+
           &.is-http {
-            background: #fb923c;
-            box-shadow: 0 0 8px rgba(251, 146, 60, 0.6);
+            background: #c8c8c8;
+
+            &::after {
+              transform: translateX(16px);
+            }
           }
         }
-        
+
         .protocol-text {
-          font-size: 14px;
-          font-weight: 500;
+          font-size: 13px;
+          font-weight: 600;
           letter-spacing: 0.5px;
-          margin-left: 12px;
+          color: #1a1a1a;
         }
       }
     }
@@ -875,63 +976,75 @@ body {
           display: block;
           font-size: 14px;
           transition: all 0.2s ease;
+          color: #999;
         }
       }
 
       span.text {
         font-size: 14px;
+        color: #1a1a1a;
       }
     }
 
     .position-menu {
       position: relative;
-      
+
       .menu-trigger {
         display: flex;
         align-items: center;
         gap: 6px;
         font-size: 14px;
-        
+        color: #1a1a1a;
+
         span {
           font-weight: 500;
         }
       }
-      
+
       .menu-dropdown {
         position: absolute;
-        top: calc(100% + 12px);
+        top: calc(100% - 4px);
         left: 50%;
         transform: translateX(-50%);
-        background: rgba(30, 30, 35, 0.9);
-        backdrop-filter: blur(20px) saturate(180%);
-        -webkit-backdrop-filter: blur(20px) saturate(180%);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: 12px;
-        padding: 8px;
-        min-width: 140px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        padding-top: 12px;
         z-index: 10020;
-        
+        width: max-content;
+        min-width: 140px;
+
+        .menu-dropdown-inner {
+          background: rgba(255, 255, 255, 0.85);
+          backdrop-filter: blur(40px) saturate(180%) brightness(1.05);
+          -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.05);
+          border: 1px solid rgba(0, 0, 0, 0.06);
+          border-radius: 16px;
+          padding: 8px;
+          box-shadow:
+            0 4px 12px rgba(0, 0, 0, 0.03),
+            0 16px 48px rgba(0, 0, 0, 0.05),
+            inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
         .menu-item {
           padding: 10px 14px;
           font-size: 14px;
           cursor: pointer;
-          border-radius: 8px;
+          border-radius: 10px;
           transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-          color: rgba(255, 255, 255, 0.95);
+          color: #1a1a1a;
           display: flex;
           align-items: center;
           gap: 10px;
-          
+
           &:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.06);
             transform: translateX(2px);
           }
-          
+
           .iconfont {
             font-size: 14px;
+            color: #666;
           }
-          
+
           span {
             font-weight: 400;
           }
@@ -1039,29 +1152,34 @@ body {
       position: fixed;
       top: 20px;
       right: 20px;
-      width: 50px;
-      height: 50px;
-      background: rgba(30, 30, 35, 0.9);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(40px) saturate(180%) brightness(1.05);
+      -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.05);
+      border: 1px solid rgba(0, 0, 0, 0.06);
       border-radius: 50%;
       cursor: pointer;
       z-index: 10015;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
-      
+      box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.02),
+        0 4px 12px rgba(0, 0, 0, 0.03),
+        0 12px 32px rgba(0, 0, 0, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
       &:hover {
-        background: rgba(30, 30, 35, 1);
-        transform: scale(1.1);
+        background: rgba(255, 255, 255, 0.9);
+        transform: scale(1.05);
       }
-      
+
       &:active {
         transform: scale(0.95);
       }
-      
+
       .iconfont {
-        font-size: 24px;
-        color: rgba(255, 255, 255, 0.95);
+        font-size: 22px;
+        color: #1a1a1a;
       }
     }
     
@@ -1072,8 +1190,9 @@ body {
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(4px);
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       z-index: 10016;
     }
     
@@ -1084,33 +1203,37 @@ body {
       right: 0;
       bottom: 0;
       max-height: 70vh;
-      background: rgba(30, 30, 35, 0.95);
-      backdrop-filter: blur(30px);
-      border-radius: 24px 24px 0 0;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(40px) saturate(180%) brightness(1.05);
+      -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.05);
+      border-radius: 28px 28px 0 0;
       z-index: 10017;
       overflow-y: auto;
-      box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.3);
-      
+      box-shadow:
+        0 -4px 12px rgba(0, 0, 0, 0.03),
+        0 -16px 48px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
       .mobile-menu-content {
-        padding: 24px 20px 40px;
+        padding: 28px 20px 40px;
         display: flex;
         flex-direction: column;
-        gap: 16px;
-        
+        gap: 12px;
+
         .url {
-          background: rgba(255, 255, 255, 0.08);
-          border: 1px solid rgba(255, 255, 255, 0.15);
-          border-radius: 12px;
+          background: rgba(0, 0, 0, 0.03);
+          border: 1px solid rgba(0, 0, 0, 0.06);
+          border-radius: 16px;
           padding: 14px 16px;
-          color: rgba(255, 255, 255, 0.95);
-          
+          color: #1a1a1a;
+
           .default {
             display: flex;
             align-items: center;
             gap: 8px;
             flex-wrap: nowrap;
           }
-          
+
           .website {
             display: flex;
             align-items: center;
@@ -1119,140 +1242,222 @@ body {
             cursor: pointer;
             white-space: nowrap;
             flex-shrink: 0;
+            color: #1a1a1a;
+            font-weight: 500;
           }
-          
+
           input {
             flex: 1;
             min-width: 0;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 10px;
             padding: 8px 10px;
-            color: rgba(255, 255, 255, 0.95);
+            color: #1a1a1a;
             font-size: 13px;
-            
+            transition: all 0.2s ease;
+
             &::placeholder {
-              color: rgba(255, 255, 255, 0.5);
+              color: #999;
             }
-            
+
             &:focus {
               outline: none;
-              border-color: rgba(255, 255, 255, 0.4);
-              background: rgba(255, 255, 255, 0.15);
+              border-color: rgba(0, 0, 0, 0.15);
+              background: rgba(0, 0, 0, 0.05);
             }
           }
-          
+
           .custom {
             margin-top: 12px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            
-            > div:not(.close) {
+            gap: 10px;
+
+            .custom-inner {
               display: flex;
               flex-direction: column;
-              gap: 6px;
-              
-              span:first-child {
-                display: flex;
+              gap: 10px;
+
+              .custom-row {
+                display: grid;
+                grid-template-columns: 70px auto 1fr;
                 align-items: center;
-                gap: 6px;
-                font-size: 13px;
-                opacity: 0.9;
-              }
-              
-              input {
-                width: 100%;
+                gap: 10px;
+                min-width: 0;
+
+                .row-label {
+                  display: flex;
+                  align-items: center;
+                  gap: 6px;
+                  font-size: 13px;
+                  color: #666;
+                  white-space: nowrap;
+                }
+
+                .row-protocol {
+                  font-size: 13px;
+                  color: #999;
+                  white-space: nowrap;
+                }
+
+                input {
+                  width: 100%;
+                  min-width: 0;
+                  background: rgba(0, 0, 0, 0.03);
+                  border: 1px solid rgba(0, 0, 0, 0.06);
+                  border-radius: 10px;
+                  padding: 8px 10px;
+                  color: #1a1a1a;
+                  font-size: 13px;
+                  transition: all 0.2s ease;
+                  box-sizing: border-box;
+
+                  &::placeholder {
+                    color: #999;
+                  }
+
+                  &:focus {
+                    outline: none;
+                    border-color: rgba(0, 0, 0, 0.15);
+                    background: rgba(0, 0, 0, 0.05);
+                  }
+                }
               }
             }
-            
+
             .close {
               align-self: flex-end;
               cursor: pointer;
               padding: 8px;
-              
+
               .iconfont {
                 font-size: 20px;
+                color: #999;
               }
             }
           }
         }
-        
+
         .control-item {
-          background: rgba(255, 255, 255, 0.08);
-          border: 1px solid rgba(255, 255, 255, 0.15);
-          border-radius: 12px;
+          background: rgba(0, 0, 0, 0.03);
+          border: 1px solid rgba(0, 0, 0, 0.06);
+          border-radius: 16px;
           padding: 14px 16px;
-          color: rgba(255, 255, 255, 0.95);
+          color: #1a1a1a;
           display: flex;
           align-items: center;
           justify-content: space-between;
           cursor: pointer;
           transition: all 0.2s ease;
-          
+
           &:active {
             transform: scale(0.98);
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(0, 0, 0, 0.06);
           }
-          
+
           label {
             display: flex;
             align-items: center;
             gap: 10px;
             width: 100%;
             cursor: pointer;
-            
+
             .checkbox {
               display: flex;
               align-items: center;
-              
+
               .iconfont {
                 font-size: 20px;
+                color: #666;
               }
             }
-            
+
             .text {
               font-size: 15px;
+              color: #1a1a1a;
             }
           }
-          
+
           &.protocol-toggle {
             justify-content: center;
-            
+
             .protocol-switch {
               display: flex;
               align-items: center;
-              gap: 8px;
-              
+              gap: 10px;
+
+              .protocol-indicator {
+                position: relative;
+                width: 36px;
+                height: 20px;
+                background: #1a1a1a;
+                border-radius: 10px;
+                transition: all 0.3s ease;
+                box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+                flex-shrink: 0;
+
+                &::after {
+                  content: '';
+                  position: absolute;
+                  top: 2px;
+                  left: 2px;
+                  width: 16px;
+                  height: 16px;
+                  background: white;
+                  border-radius: 50%;
+                  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+                  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                }
+
+                &.is-http {
+                  background: #c8c8c8;
+
+                  &::after {
+                    transform: translateX(16px);
+                  }
+                }
+              }
+
               .protocol-text {
                 font-size: 15px;
-                font-weight: 500;
+                font-weight: 600;
+                color: #1a1a1a;
               }
             }
           }
-          
+
           &.position-menu {
             flex-direction: column;
             align-items: stretch;
-            
+
             .menu-trigger {
               display: flex;
               align-items: center;
               gap: 10px;
               font-size: 15px;
+              color: #1a1a1a;
             }
-            
+
             .menu-dropdown {
               position: static;
               margin-top: 12px;
-              background: rgba(0, 0, 0, 0.3);
-              border: 1px solid rgba(255, 255, 255, 0.1);
-              
+              background: rgba(0, 0, 0, 0.04);
+              border: 1px solid rgba(0, 0, 0, 0.06);
+              border-radius: 12px;
+              padding: 4px;
+
               .menu-item {
                 padding: 12px 14px;
-                
+                color: #1a1a1a;
+                border-radius: 10px;
+                transition: all 0.2s ease;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
                 &:active {
-                  background: rgba(255, 255, 255, 0.15);
+                  background: rgba(0, 0, 0, 0.08);
                 }
               }
             }
