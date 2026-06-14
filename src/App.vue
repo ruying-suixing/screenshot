@@ -31,7 +31,7 @@ const handleActiveDevice = (device: Device) => {
 
 // 网址处理
 const protocol = ref('https');     // 默认协议为 https
-const url = ref('www.liushen.fun')
+const url = ref('www.rusin.lol')
 const phone = ref('')
 const pad = ref('')
 const computer = ref('')
