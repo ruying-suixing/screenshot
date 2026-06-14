@@ -508,7 +508,7 @@ const importPositionCode = () => {
 
 body {
   color: #333;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: LXGW WenKai Screen, Avenir, Helvetica, Arial, sans-serif;
   user-select: none;
   height: 100vh;
   background-color: white;
@@ -805,7 +805,7 @@ body {
           min-width: 80px;
           height: 28px;
           padding: 4px 10px;
-          font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+          font-family: LXGW WenKai Screen, -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
           font-size: 14px;
           color: #1a1a1a;
           background: rgba(0, 0, 0, 0.03);
@@ -891,7 +891,7 @@ body {
         height: 32px;
         padding: 4px 10px;
         margin-left: 2px;
-        font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        font-family: LXGW WenKai Screen, -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         font-size: 14px;
         color: #1a1a1a;
         background: rgba(0, 0, 0, 0.03);
