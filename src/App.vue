@@ -575,7 +575,8 @@ body {
         left: 50%;
         border: 4px solid rgba(125, 125, 125, 0.1);
 
-        ::-webkit-scrollbar body {
+        /* 正确：紧贴元素，无空格 */
+        .main .preview-box div iframe::-webkit-scrollbar {
           display: none;
         }
       }
